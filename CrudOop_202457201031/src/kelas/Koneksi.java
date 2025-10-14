@@ -11,7 +11,7 @@ public class Koneksi {
     public static Connection konek() {
         
         try {
-            String url = "jdbc:mysql://localhost:3306/kaylaparfume";
+            String url = "jdbc:mysql://localhost:3306/crudopp_202457201031";
             
             //Username database
             String user = "root";
