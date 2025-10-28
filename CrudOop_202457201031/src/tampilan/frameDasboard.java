@@ -66,6 +66,15 @@ public class frameDasboard extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("User");
+        jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu4MenuSelected(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -94,6 +103,11 @@ public class frameDasboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new frameProduct().setVisible(true);
     }//GEN-LAST:event_jMenu2MenuSelected
+
+    private void jMenu4MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu4MenuSelected
+        // TODO add your handling code here:
+        new frameUser().setVisible(true);
+    }//GEN-LAST:event_jMenu4MenuSelected
 
     /**
      * @param args the command line arguments

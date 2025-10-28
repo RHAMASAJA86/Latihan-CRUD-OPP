@@ -8,9 +8,10 @@ public class Koneksi {
     
     private static Connection mysqlconfig;
     
-    public static Connection konek() {
+    public static Connection configDB() {
         
         try {
+            //url database
             String url = "jdbc:mysql://localhost:3306/crudopp_202457201031";
             
             //Username database
