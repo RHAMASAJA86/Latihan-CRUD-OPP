@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
-public class PanelGradient extends JPanel{
-
+public class PanelGradient extends JPanel {
     private Color colorStart = Color.BLACK;
     private Color colorEnd = Color.WHITE;
-
+    
+    // setter dan getter
     public Color getColorStart() {
         return colorStart;
     }
