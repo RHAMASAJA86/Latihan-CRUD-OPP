@@ -80,22 +80,42 @@ public class user extends Koneksi {
     }
     
     public void ubahUSer() {
-        query = "UPDATE user SET userEmail = ?, userPassword = MD5(?), userFullName = ?, userStatus = ? WHERE userName = ?";
-        
-        try {
-            ps = koneksi.prepareStatement(query);
-            ps.setString(1, userName);
-            ps.setString(2, userEmail);
-            ps.setString(3, userPassword);
-            ps.setString(4, userFullName);
-            ps.setInt(5, userStatus);
-            ps.executeUpdate();
-            ps.close();
+        if(userPassword == "") {
             
-            JOptionPane.showMessageDialog(null, "Data berhasil di ubah");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data gagal di ubah");
-        }  
+            try {
+                query = "UPDATE user SET userEmail = ?, userPassword = MD5(?), userFullName = ?, userStatus = ? WHERE userName = ?";
+                ps = koneksi.prepareStatement(query);
+                ps.setString(1, userName);
+                ps.setString(2, userEmail);
+                ps.setString(3, userPassword);
+                ps.setString(4, userFullName);
+                ps.setInt(5, userStatus);
+                ps.executeUpdate();
+                ps.close();
+
+                JOptionPane.showMessageDialog(null, "Data berhasil di ubah");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di ubah");
+            }
+        } else {
+            
+        
+            try {
+                query = "UPDATE user SET userEmail = ?, userPassword = MD5(?), userFullName = ?, userStatus = ? WHERE userName = ?";
+                ps = koneksi.prepareStatement(query);
+                ps.setString(1, userName);
+                ps.setString(2, userPassword);
+                ps.setString(3, userEmail);
+                ps.setString(4, userFullName);
+                ps.setInt(5, userStatus);
+                ps.executeUpdate();
+                ps.close();
+
+                JOptionPane.showMessageDialog(null, "Data berhasil di ubah");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di ubah");
+            }  
+        }
     }
     
     public void hapusUser() {
@@ -125,4 +145,34 @@ public class user extends Koneksi {
         
         return rs;
     }
+    
+    public void login() {        
+        try {
+            query ="SELECT * FROM user WHERE userName = ? AND userPassword = MD5 (?)";
+            ps = koneksi.prepareStatement(query);
+            ps.setString(1, userName);
+            ps.setString(2, userPassword);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                sesion.setUsername(rs.getString("userName"));
+                sesion.setEmail(rs.getString("userEmail"));
+                sesion.setFullname(rs.getString("userFullName"));
+                sesion.setStatus("Aktif");
+            } else {
+                sesion.setStatus("Non Aktif");
+                JOptionPane.showMessageDialog(null, "Username atau Password salah, silahkan coba lagi");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Login gagal, silakan coba lagi"+ e);
+        }
+    }
+    
+    public void logOut() {
+        sesion.setUsername("");
+        sesion.setEmail("");
+        sesion.setFullname("");
+        sesion.setStatus("");
+    } 
 }

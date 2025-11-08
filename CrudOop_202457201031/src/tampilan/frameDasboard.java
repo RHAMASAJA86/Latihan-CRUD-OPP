@@ -1,17 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package tampilan;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import kelas.sesion;
+import kelas.user;
 
-/**
- *
- * @author asus
- */
 public class frameDasboard extends javax.swing.JFrame {
 
     /**
@@ -19,6 +13,9 @@ public class frameDasboard extends javax.swing.JFrame {
      */
     public frameDasboard() {
         initComponents();
+        tUsername.setText(sesion.getUsername());
+        tEmail.setText(sesion.getEmail());
+        tFullname.setText(sesion.getFullname());
     }
 
     /**
@@ -31,9 +28,15 @@ public class frameDasboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        tUsername = new javax.swing.JLabel();
+        tEmail = new javax.swing.JLabel();
+        tFullname = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mLogout = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -43,36 +46,56 @@ public class frameDasboard extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Welecome  Aplikasi Java");
 
+        tUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tUsername.setText("Username");
+
+        tEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tEmail.setText("Email ");
+
+        tFullname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tFullname.setText("Nama ");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Username  :");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("Email          :");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setText("Nama         :");
+
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Logout");
-        jMenu1.add(jMenuItem1);
+        mLogout.setText("Logout");
+        mLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mLogoutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mLogout);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Product");
-        jMenu2.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu2MenuSelected(evt);
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
             }
         });
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Category");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("User");
-        jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu4MenuSelected(evt);
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
             }
         });
         jMenuBar1.add(jMenu4);
@@ -84,30 +107,69 @@ public class frameDasboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(328, 328, 328)
-                .addComponent(jLabel1)
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(328, 328, 328)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tUsername)
+                            .addComponent(tEmail)
+                            .addComponent(tFullname)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(278, 278, 278)
+                        .addComponent(jLabel1)))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(49, 49, 49)
                 .addComponent(jLabel1)
-                .addContainerGap(501, Short.MAX_VALUE))
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tUsername)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tEmail)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tFullname)
+                    .addComponent(jLabel4))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu2MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu2MenuSelected
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here:
         new frameProduct().setVisible(true);
-    }//GEN-LAST:event_jMenu2MenuSelected
+    }//GEN-LAST:event_jMenu2MouseClicked
 
-    private void jMenu4MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu4MenuSelected
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
         new frameUser().setVisible(true);
-    }//GEN-LAST:event_jMenu4MenuSelected
+    }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+        new frameKategory().setVisible(true);
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void mLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLogoutActionPerformed
+        // TODO add your handling code here:
+        user usr = new user();
+        usr.logOut();
+        dispose();
+        new frameLogin().setVisible(true);
+    }//GEN-LAST:event_mLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,11 +196,17 @@ public class frameDasboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem mLogout;
+    private javax.swing.JLabel tEmail;
+    private javax.swing.JLabel tFullname;
+    private javax.swing.JLabel tUsername;
     // End of variables declaration//GEN-END:variables
 }

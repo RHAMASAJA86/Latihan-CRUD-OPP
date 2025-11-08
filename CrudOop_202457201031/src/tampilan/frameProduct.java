@@ -1,12 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package tampilan;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import kelas.category;
+import kelas.product;
 
 /**
  *
@@ -19,7 +21,61 @@ public class frameProduct extends javax.swing.JFrame {
      */
     public frameProduct() {
         initComponents();
+        loadTabel();
+        loadComboBox();
     }
+    
+    void reset() {
+        tNamaproduk.setText(null);
+        tDeskripsi.setText(null);
+        tHarga.setText(null);
+        cbKategory.setSelectedItem(null);
+    }
+    
+    void loadTabel() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Username");
+        model.addColumn("Email");
+        model.addColumn("Full Name");
+        model.addColumn("Status");
+
+        try {
+            // Membuat objek user dan mengambil data dari database
+            product usr = new product();
+            ResultSet result = usr.TampilProduk();            
+
+            // Loop data hasil query baris per baris
+            while (result.next()) {
+                // Tambahkan baris ke dalam tabel model
+                model.addRow(new Object[]{
+                    result.getString("productID"),
+                    result.getString("productName"),
+                    result.getString("categoryName"),
+                    result.getInt("productOPrice"),
+                });
+            }
+            
+            // Set model ke JTable
+            tblProduct.setModel(model);
+        }catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    void loadComboBox() {
+        try {
+            category cg = new category();
+            ResultSet result = cg.TampilCategory();
+            
+            cbKategory.removeAllItems();
+            while(result.next()) {
+                cbKategory.addItem(result.getString("categoryName"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal memuat data");
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,21 +86,311 @@ public class frameProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelGradient1 = new panelgradient.PanelGradient();
+        jLabel1 = new javax.swing.JLabel();
+        btnClose = new javax.swing.JLabel();
+        panelGradient2 = new panelgradient.PanelGradient();
+        jLabel2 = new javax.swing.JLabel();
+        tNamaproduk = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tDeskripsi = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cbKategory = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        tHarga = new javax.swing.JTextField();
+        btnTambah = new javax.swing.JButton();
+        btnUbah = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProduct = new javax.swing.JTable();
+        btnReset = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelGradient1.setColorEnd(new java.awt.Color(0, 255, 255));
+        panelGradient1.setColorStart(new java.awt.Color(0, 51, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Product");
+
+        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconClose.png"))); // NOI18N
+        btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCloseMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelGradient1Layout = new javax.swing.GroupLayout(panelGradient1);
+        panelGradient1.setLayout(panelGradient1Layout);
+        panelGradient1Layout.setHorizontalGroup(
+            panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGradient1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnClose)
+                .addGap(19, 19, 19))
+        );
+        panelGradient1Layout.setVerticalGroup(
+            panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGradient1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClose)
+                    .addComponent(jLabel1))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        panelGradient2.setColorEnd(new java.awt.Color(0, 255, 255));
+        panelGradient2.setColorStart(new java.awt.Color(0, 51, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Nama Produk");
+
+        tNamaproduk.setPreferredSize(new java.awt.Dimension(65, 25));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Deskripsi");
+
+        tDeskripsi.setPreferredSize(new java.awt.Dimension(65, 25));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Kategory");
+
+        cbKategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbKategory.setPreferredSize(new java.awt.Dimension(65, 25));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Harga");
+
+        tHarga.setPreferredSize(new java.awt.Dimension(65, 25));
+
+        javax.swing.GroupLayout panelGradient2Layout = new javax.swing.GroupLayout(panelGradient2);
+        panelGradient2.setLayout(panelGradient2Layout);
+        panelGradient2Layout.setHorizontalGroup(
+            panelGradient2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGradient2Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(panelGradient2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(tDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(tNamaproduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbKategory, 0, 160, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        panelGradient2Layout.setVerticalGroup(
+            panelGradient2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGradient2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tNamaproduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbKategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addGap(12, 12, 12)
+                .addComponent(tHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnTambah.setBackground(new java.awt.Color(0, 153, 102));
+        btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconTambah.png"))); // NOI18N
+        btnTambah.setText("Tambah");
+        btnTambah.setMaximumSize(new java.awt.Dimension(104, 31));
+        btnTambah.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+
+        btnUbah.setBackground(new java.awt.Color(204, 204, 0));
+        btnUbah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUbah.setForeground(new java.awt.Color(255, 255, 255));
+        btnUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconUbah.png"))); // NOI18N
+        btnUbah.setText("Ubah");
+        btnUbah.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
+
+        btnHapus.setBackground(new java.awt.Color(204, 0, 0));
+        btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHapus.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconHapus.png"))); // NOI18N
+        btnHapus.setText("Hapus");
+        btnHapus.setMaximumSize(new java.awt.Dimension(104, 31));
+        btnHapus.setMinimumSize(new java.awt.Dimension(104, 31));
+        btnHapus.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+
+        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProduct);
+
+        btnReset.setBackground(new java.awt.Color(102, 102, 0));
+        btnReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReset.setForeground(new java.awt.Color(255, 255, 255));
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconReset.png"))); // NOI18N
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(panelGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(panelGradient2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelGradient1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelGradient2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        // TODO add your handling code here:
+        product pt = new product();
+        category categoryTambah = new category();
+        
+        try {
+            
+            pt.setProductName(tNamaproduk.getText());
+            pt.setProductDescription(tDeskripsi.getText());
+            pt.setProductPrice(Integer.parseInt(tHarga.getText()));
+            
+            categoryTambah.setCategroyName(cbKategory.getSelectedItem().toString());
+            ResultSet result = categoryTambah.konversi();
+            
+            if (result.next()) {
+                int id = result.getInt("categoryId");
+                pt.setProductCategory(id);
+            }
+           
+            pt.TambahData();
+            
+        } catch (NumberFormatException numberFormatException) {
+            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+        }
+        
+        reset();
+        loadTabel();
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
+        // TODO add your handling code here:
+        dispose();
+        new frameDasboard().setVisible(true);
+    }//GEN-LAST:event_btnCloseMouseClicked
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        // TODO add your handling code here:
+        product pt = new product();
+        category categoryTambah = new category();
+        
+        try {
+            pt.setProductName(tNamaproduk.getText());
+            pt.setProductDescription(tDeskripsi.getText());
+            pt.setProductPrice(Integer.parseInt(tHarga.getText()));
+            
+            categoryTambah.setCategroyName(cbKategory.getSelectedItem().toString());
+            ResultSet rsVarCek = categoryTambah.konversi();
+            
+            if (rsVarCek.next()) {
+                int id = rsVarCek.getInt("categoryId");
+                pt.setProductCategory(id);
+            }
+           
+            pt.UbahData();
+            
+        } catch (NumberFormatException numberFormatException) {
+            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+        }
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:\
+        product productHapus = new product();
+        productHapus.HapusData();
+        
+        reset();
+        loadTabel();
+    }//GEN-LAST:event_btnHapusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -71,5 +417,23 @@ public class frameProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnClose;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnUbah;
+    private javax.swing.JComboBox<String> cbKategory;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private panelgradient.PanelGradient panelGradient1;
+    private panelgradient.PanelGradient panelGradient2;
+    private javax.swing.JTextField tDeskripsi;
+    private javax.swing.JTextField tHarga;
+    private javax.swing.JTextField tNamaproduk;
+    private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables
 }
