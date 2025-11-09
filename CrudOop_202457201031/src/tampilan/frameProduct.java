@@ -21,58 +21,79 @@ public class frameProduct extends javax.swing.JFrame {
      */
     public frameProduct() {
         initComponents();
-        loadTabel();
+        autoID();
         loadComboBox();
+        reset();
+        loadTabel();
+        
+    }
+    
+    void autoID() {
+        product prd = new product();
+        ResultSet rs = prd.autoId();
+        try {
+            if (rs.next()) {
+                int id = rs.getInt("ID") + 1;
+                tIdProduk.setText("PD" + id);
+            } else {
+                tIdProduk.setText("PD1");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+        }
     }
     
     void reset() {
+        tIdProduk.setEditable(false);
         tNamaproduk.setText(null);
         tDeskripsi.setText(null);
         tHarga.setText(null);
-        cbKategory.setSelectedItem(null);
+
+        if (cbKategory.getItemCount() > 0) { 
+            cbKategory.setSelectedIndex(0);
+        }
+        autoID();
     }
     
     void loadTabel() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Username");
-        model.addColumn("Email");
-        model.addColumn("Full Name");
-        model.addColumn("Status");
+        model.addColumn("Product ID");
+        model.addColumn("Nama Produk");
+        model.addColumn("Deskripsi");
+        model.addColumn("Kategori");
+        model.addColumn("Harga");
 
         try {
-            // Membuat objek user dan mengambil data dari database
-            product usr = new product();
-            ResultSet result = usr.TampilProduk();            
+            product pd = new product();
+            ResultSet data = pd.TampilProduk();
 
-            // Loop data hasil query baris per baris
-            while (result.next()) {
-                // Tambahkan baris ke dalam tabel model
+            while(data.next()){
                 model.addRow(new Object[]{
-                    result.getString("productID"),
-                    result.getString("productName"),
-                    result.getString("categoryName"),
-                    result.getInt("productOPrice"),
+                    data.getInt("productID"),
+                    data.getString("productName"),
+                    data.getString("productDescription"),
+                    data.getString("categoryName"),
+                    data.getInt("productPrice")
                 });
             }
-            
-            // Set model ke JTable
-            tblProduct.setModel(model);
-        }catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal memuat data" + e.getMessage());
         }
+        tblProduct.setModel(model);
     }
     
     void loadComboBox() {
         try {
-            category cg = new category();
-            ResultSet result = cg.TampilCategory();
-            
             cbKategory.removeAllItems();
-            while(result.next()) {
-                cbKategory.addItem(result.getString("categoryName"));
+            category value = new category();
+            ResultSet rs = value.dataCB();
+
+            while (rs.next()) {
+                String data = rs.getString("categoryName");
+                cbKategory.addItem(data);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal memuat data");
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
     }
     
@@ -98,6 +119,7 @@ public class frameProduct extends javax.swing.JFrame {
         cbKategory = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         tHarga = new javax.swing.JTextField();
+        tIdProduk = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
         btnUbah = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
@@ -106,6 +128,7 @@ public class frameProduct extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         panelGradient1.setColorEnd(new java.awt.Color(0, 255, 255));
         panelGradient1.setColorStart(new java.awt.Color(0, 51, 255));
@@ -149,18 +172,21 @@ public class frameProduct extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama Produk");
 
+        tNamaproduk.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tNamaproduk.setPreferredSize(new java.awt.Dimension(65, 25));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Deskripsi");
 
+        tDeskripsi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tDeskripsi.setPreferredSize(new java.awt.Dimension(65, 25));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Kategory");
 
+        cbKategory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbKategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbKategory.setPreferredSize(new java.awt.Dimension(65, 25));
 
@@ -168,7 +194,11 @@ public class frameProduct extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Harga");
 
+        tHarga.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tHarga.setPreferredSize(new java.awt.Dimension(65, 25));
+
+        tIdProduk.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tIdProduk.setPreferredSize(new java.awt.Dimension(65, 25));
 
         javax.swing.GroupLayout panelGradient2Layout = new javax.swing.GroupLayout(panelGradient2);
         panelGradient2.setLayout(panelGradient2Layout);
@@ -184,7 +214,8 @@ public class frameProduct extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(tNamaproduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbKategory, 0, 160, Short.MAX_VALUE))
+                    .addComponent(cbKategory, 0, 160, Short.MAX_VALUE)
+                    .addComponent(tIdProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         panelGradient2Layout.setVerticalGroup(
@@ -206,7 +237,9 @@ public class frameProduct extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(12, 12, 12)
                 .addComponent(tHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tIdProduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
         btnTambah.setBackground(new java.awt.Color(0, 153, 102));
@@ -259,6 +292,11 @@ public class frameProduct extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduct);
 
         btnReset.setBackground(new java.awt.Color(102, 102, 0));
@@ -312,37 +350,41 @@ public class frameProduct extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        // TODO add your handling code here:
-        product pt = new product();
-        category categoryTambah = new category();
-        
-        try {
-            
-            pt.setProductName(tNamaproduk.getText());
-            pt.setProductDescription(tDeskripsi.getText());
-            pt.setProductPrice(Integer.parseInt(tHarga.getText()));
-            
-            categoryTambah.setCategroyName(cbKategory.getSelectedItem().toString());
-            ResultSet result = categoryTambah.konversi();
-            
-            if (result.next()) {
-                int id = result.getInt("categoryId");
-                pt.setProductCategory(id);
-            }
-           
-            pt.TambahData();
-            
-        } catch (NumberFormatException numberFormatException) {
-            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+        // TODO add your handling code here:       
+        if (tNamaproduk.getText().trim().isEmpty() || tHarga.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama produk dan harga tidak boleh kosong!");
+            return;
         }
-        
+
+        product prd = new product();
+        category ctg = new category();
+
+        try {
+            int idDb = Integer.parseInt(tIdProduk.getText().replace("PD", "").trim());
+            prd.setProductId(idDb);
+            prd.setProductName(tNamaproduk.getText());
+            prd.setProductDescription(tDeskripsi.getText());
+            prd.setProductPrice(Integer.parseInt(tHarga.getText()));
+
+            // ambil ID kategori
+            ctg.setCategroyName(cbKategory.getSelectedItem().toString().trim());
+            ResultSet rsCat = ctg.konversi();
+            if (rsCat.next()) {
+                int catId = rsCat.getInt("categoryId");
+                prd.setProductCategory(catId);
+            }
+
+            prd.TambahData();
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal: " + e.getMessage());
+        }
+
         reset();
-        loadTabel();
+        loadTabel();  
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
@@ -358,39 +400,58 @@ public class frameProduct extends javax.swing.JFrame {
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
-        product pt = new product();
-        category categoryTambah = new category();
-        
+        product prd = new product();
+        category ctg = new category();
+
         try {
-            pt.setProductName(tNamaproduk.getText());
-            pt.setProductDescription(tDeskripsi.getText());
-            pt.setProductPrice(Integer.parseInt(tHarga.getText()));
-            
-            categoryTambah.setCategroyName(cbKategory.getSelectedItem().toString());
-            ResultSet rsVarCek = categoryTambah.konversi();
-            
-            if (rsVarCek.next()) {
-                int id = rsVarCek.getInt("categoryId");
-                pt.setProductCategory(id);
+            int idDb = Integer.parseInt(tIdProduk.getText().replace("PD", "").trim());
+            prd.setProductId(idDb);
+            prd.setProductName(tNamaproduk.getText());
+            prd.setProductDescription(tDeskripsi.getText());
+            prd.setProductPrice(Integer.parseInt(tHarga.getText()));
+
+            ctg.setCategroyName(cbKategory.getSelectedItem().toString());
+            ResultSet rsCat = ctg.konversi();
+            if (rsCat.next()) {
+                prd.setProductCategory(rsCat.getInt("categoryId"));
             }
-           
-            pt.UbahData();
-            
-        } catch (NumberFormatException numberFormatException) {
-            JOptionPane.showMessageDialog(null, "Error : " + numberFormatException.getMessage());
-        } catch (SQLException sQLException) {
-            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+
+            prd.UbahData();
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagagl: " + e.getMessage());
         }
+
+        reset();
+        loadTabel();
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:\
-        product productHapus = new product();
-        productHapus.HapusData();
-        
+        product prd = new product();
+        int idDb = Integer.parseInt(tIdProduk.getText().replace("PD", "").trim());
+        prd.setProductId(idDb);
+        prd.HapusData();
+
         reset();
         loadTabel();
     }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
+        // TODO add your handling code here:
+        int choiceRow = tblProduct.rowAtPoint(evt.getPoint());
+
+        String id = tblProduct.getValueAt(choiceRow, 0).toString();
+        String nama = tblProduct.getValueAt(choiceRow, 1).toString();    
+        String deskripsi = tblProduct.getValueAt(choiceRow, 2).toString();
+        String kategori = tblProduct.getValueAt(choiceRow, 3).toString();      
+        String harga = tblProduct.getValueAt(choiceRow, 4).toString();
+
+        tIdProduk.setText(id);
+        tNamaproduk.setText(nama);
+        tDeskripsi.setText(deskripsi);
+        cbKategory.setSelectedItem(kategori);   
+        tHarga.setText(harga);
+    }//GEN-LAST:event_tblProductMouseClicked
 
     /**
      * @param args the command line arguments
@@ -433,6 +494,7 @@ public class frameProduct extends javax.swing.JFrame {
     private panelgradient.PanelGradient panelGradient2;
     private javax.swing.JTextField tDeskripsi;
     private javax.swing.JTextField tHarga;
+    private javax.swing.JTextField tIdProduk;
     private javax.swing.JTextField tNamaproduk;
     private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables

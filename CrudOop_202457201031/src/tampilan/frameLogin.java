@@ -42,9 +42,11 @@ public class frameLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         tUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        tUsername.setBorder(null);
+        tUsername.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        tUsername.setSelectionStart(5);
 
         btnLogin.setBackground(new java.awt.Color(0, 51, 255));
         btnLogin.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -77,7 +79,8 @@ public class frameLogin extends javax.swing.JFrame {
             }
         });
 
-        tPassword.setBorder(null);
+        tPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCloseHitam.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,7 +110,7 @@ public class frameLogin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(14, 14, 14))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,6 +135,7 @@ public class frameLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed

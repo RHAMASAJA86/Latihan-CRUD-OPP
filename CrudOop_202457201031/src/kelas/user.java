@@ -65,72 +65,74 @@ public class user extends Koneksi {
         
         try {
             ps = koneksi.prepareStatement(query);
-            ps.setString(1, userName);
-            ps.setString(2, userEmail);
-            ps.setString(3, userPassword);
-            ps.setString(4, userFullName);
-            ps.setInt(5, userStatus);
+            ps.setString(1, this.userName);
+            ps.setString(2, this.userEmail);
+            ps.setString(3, this.userPassword);
+            ps.setString(4, this.userFullName);
+            ps.setInt(5, this.userStatus);
             ps.executeUpdate();
             ps.close();
             
             JOptionPane.showMessageDialog(null, "Data berhasil di tampilkan");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data gagal di tambahkan");
+            JOptionPane.showMessageDialog(null, "Data gagal di tambahkan" + e.getMessage());
         }  
     }
     
-    public void ubahUSer() {
-        if(userPassword == "") {
+    public void ubahUser() {
+        if (this.userPassword.equals("")) {
             
             try {
-                query = "UPDATE user SET userEmail = ?, userPassword = MD5(?), userFullName = ?, userStatus = ? WHERE userName = ?";
+                query = "UPDATE user SET userEmail = ?, userFullName = ?, userStatus = ? WHERE userName = ?";
+                
                 ps = koneksi.prepareStatement(query);
-                ps.setString(1, userName);
-                ps.setString(2, userEmail);
-                ps.setString(3, userPassword);
-                ps.setString(4, userFullName);
-                ps.setInt(5, userStatus);
+                ps.setString(1, this.userEmail);
+                ps.setString(2, this.userFullName);
+                ps.setInt(3, this.userStatus);
+                ps.setString(4, this.userName);
                 ps.executeUpdate();
                 ps.close();
 
-                JOptionPane.showMessageDialog(null, "Data berhasil di ubah");
+                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Data gagal di ubah");
+                JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
             }
         } else {
             
-        
             try {
                 query = "UPDATE user SET userEmail = ?, userPassword = MD5(?), userFullName = ?, userStatus = ? WHERE userName = ?";
+
                 ps = koneksi.prepareStatement(query);
-                ps.setString(1, userName);
-                ps.setString(2, userPassword);
-                ps.setString(3, userEmail);
-                ps.setString(4, userFullName);
-                ps.setInt(5, userStatus);
+                ps.setString(1, this.userEmail);
+                ps.setString(2, this.userPassword);
+                ps.setString(3, this.userFullName);
+                ps.setInt(4, this.userStatus);
+                ps.setString(5, this.userName);
                 ps.executeUpdate();
                 ps.close();
 
-                JOptionPane.showMessageDialog(null, "Data berhasil di ubah");
+                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Data gagal di ubah");
-            }  
+                JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+            }
         }
     }
     
     public void hapusUser() {
-        query = "UPDATE INTO user WHERE userName = ?";
-        
-        try {
+         try {
+            query = "DELETE FROM user WHERE userName = ?";
+
             ps = koneksi.prepareStatement(query);
-            ps.setString(1, userName);
+            ps.setString(1, this.userName);
             ps.executeUpdate();
             ps.close();
-            
-            JOptionPane.showMessageDialog(null, "Data berhasil di hapus");
+
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data gagal di hapus");
-        }  
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+        }
     }  
     
     public ResultSet TampilUser() {
@@ -139,8 +141,8 @@ public class user extends Koneksi {
         try {
             st = koneksi.createStatement();
             rs = st.executeQuery(query);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Data gagal di tampilkan");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Data gagal di tampilkan" + e.getMessage());
         }
         
         return rs;
@@ -150,8 +152,8 @@ public class user extends Koneksi {
         try {
             query ="SELECT * FROM user WHERE userName = ? AND userPassword = MD5 (?)";
             ps = koneksi.prepareStatement(query);
-            ps.setString(1, userName);
-            ps.setString(2, userPassword);
+            ps.setString(1, this.userName);
+            ps.setString(2, this.userPassword);
             rs = ps.executeQuery();
             
             if (rs.next()) {
@@ -161,11 +163,10 @@ public class user extends Koneksi {
                 sesion.setStatus("Aktif");
             } else {
                 sesion.setStatus("Non Aktif");
-                JOptionPane.showMessageDialog(null, "Username atau Password salah, silahkan coba lagi");
+                JOptionPane.showMessageDialog(null, "Username atau Password salah, silahkan coba lagi ");
             }
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Login gagal, silakan coba lagi"+ e);
+            JOptionPane.showMessageDialog(null, "Login gagal, silakan coba lagi " + e.getMessage());
         }
     }
     

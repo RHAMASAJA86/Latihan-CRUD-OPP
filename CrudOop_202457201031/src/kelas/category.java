@@ -45,7 +45,7 @@ public class category extends Koneksi {
             rs = st.executeQuery(query);
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
         return rs;
     }
@@ -53,60 +53,86 @@ public class category extends Koneksi {
     public void TambahData() {
         try {
             query = "INSERT INTO category VALUES (?, ?)";
-            
+
             ps = Koneksi.prepareStatement(query);
-            ps.setInt(1, categoryId);
-            ps.setString(2, categoryName);
+            ps.setInt(1, this.categoryId);
+            ps.setString(2, this.categoryName);
             ps.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Data berhasil ditambahkan");
-            
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
     }
     
     public void UbahData() {
         try {
             query = "UPDATE category SET categoryName = ? WHERE categoryId = ?";
-            
+
             ps = Koneksi.prepareStatement(query);
-            ps.setString(1, categoryName);
-            ps.setInt(2, categoryId);
+            ps.setString(1, this.categoryName);
+            ps.setInt(2, this.categoryId);
+
             ps.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
     }
     
     public void HapusData() {
         try {
             query = "DELETE FROM category WHERE categoryId = ?";
-            
+
             ps = Koneksi.prepareStatement(query);
-            ps.setInt(1, categoryId);
+            ps.setInt(1, this.categoryId);
+
             ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Data berhasil dihapus"); 
+
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
     }
     
-    public ResultSet konversi(){
+    public ResultSet dataCB() {
         try {
-            query = "SELECT categoryId FROM category WHERE categoryName = ?";
-            
-            ps = Koneksi.prepareStatement(query);
-            ps.setString(1, categoryName);
-            
-            rs = ps.executeQuery();
-        } catch (SQLException sQLException) {
-            JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
+            query = "SELECT categoryName FROM category";
+
+            st = Koneksi.createStatement();
+            rs = st.executeQuery(query);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
         }
         return rs;
     }
     
+    public ResultSet konversi() {
+        try {
+            query = "SELECT categoryId FROM category WHERE categoryName = ?";
+
+            ps = Koneksi.prepareStatement(query);
+            ps.setString(1, this.categoryName);
+
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+        }
+        return rs;
+    }
+    
+    public ResultSet autoID() {
+        try {
+            query = "SELECT COALESCE(MAX(categoryId), 0) AS ID FROM category";
+            st = Koneksi.createStatement();
+            rs = st.executeQuery(query);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+        }
+        return rs;
+    }  
 }

@@ -6,6 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import kelas.user;
 
 public class frameUser extends javax.swing.JFrame {
@@ -15,7 +16,7 @@ public class frameUser extends javax.swing.JFrame {
      */
     public frameUser() {
         initComponents(); 
-        load_tabel();
+        loadTabel();
         reset();
     }
     
@@ -27,7 +28,7 @@ public class frameUser extends javax.swing.JFrame {
         cbStatus.setSelectedItem(null);
     }
     
-    void load_tabel() {
+    void loadTabel() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Username");
         model.addColumn("Email");
@@ -55,9 +56,8 @@ public class frameUser extends javax.swing.JFrame {
 
             // Set model ke JTable
             tblUser.setModel(model);
-
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("gagal: " + e.getMessage());
         }
     }
     
@@ -92,6 +92,7 @@ public class frameUser extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         panelGradient1.setColorEnd(new java.awt.Color(0, 255, 255));
         panelGradient1.setColorStart(new java.awt.Color(0, 51, 255));
@@ -319,6 +320,7 @@ public class frameUser extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
@@ -336,12 +338,17 @@ public class frameUser extends javax.swing.JFrame {
         }
         
         usr.tambahUser();
-        load_tabel();
+        loadTabel();
         reset();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
+        if (tUsername.getText().isBlank() || tEmail.getText().isBlank() || tFullName.getText().isBlank() || (cbStatus.getSelectedItem() == null)) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan");
+            return;
+        }
+        
         user usr = new user();
         usr.setUserName(tUsername.getText());
         usr.setUserEmail(tEmail.getText());
@@ -354,8 +361,8 @@ public class frameUser extends javax.swing.JFrame {
             usr.setUserStatus(0);
         }
         
-        usr.ubahUSer();
-        load_tabel();
+        usr.ubahUser();
+        loadTabel();
         reset();
     }//GEN-LAST:event_btnUbahActionPerformed
 
@@ -374,7 +381,7 @@ public class frameUser extends javax.swing.JFrame {
         }
         
         usr.hapusUser();
-        load_tabel();
+        loadTabel();
         reset();
     }//GEN-LAST:event_btnHapusActionPerformed
 

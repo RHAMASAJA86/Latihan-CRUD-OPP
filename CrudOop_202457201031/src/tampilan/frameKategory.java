@@ -20,35 +20,54 @@ public class frameKategory extends javax.swing.JFrame {
      */
     public frameKategory() {
         initComponents();
-        reset();
+        autoID();
         loadTabel();
+        reset();  
     }
     
+    void autoID() {
+        category ctg = new category();
+        ResultSet rs = ctg.autoID();
+        try {
+            if (rs.next()) {
+                int id = rs.getInt("ID") + 1;
+                tIdKategory.setText("K" + id);
+            } else {
+                tIdKategory.setText("K1");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "gagal : " + e.getMessage());
+        }
+    }
+
+    
     void reset(){
-        tNamakategory.setText(null);
+        tNamakategory.setText("");
+        tNamakategory.requestFocus();
+        tIdKategory.setEditable(false);
+        autoID();
     }
     
     void loadTabel() {
         DefaultTableModel model = new DefaultTableModel();
         category categoryData = new category();
-        
+
         model.addColumn("ID Category");
         model.addColumn("Nama Category");
-        
+
         try {
-            ResultSet result = categoryData.TampilCategory();
-            
-            while (result.next()) {
-                int id = result.getInt("categoryId");
-                String nama = result.getString("categoryName");
-                
-                Object data[] = {id, nama};
+            ResultSet rs = categoryData.TampilCategory();
+
+            while (rs.next()) {
+                int id = rs.getInt("categoryId");
+                String nama = rs.getString("categoryName");
+
+                Object data[] = {"K" + id, nama};
                 model.addRow(data);
             }
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Error : " + sQLException.getMessage());
         }
-        
         tblCategory.setModel(model);
     }
 
@@ -72,6 +91,7 @@ public class frameKategory extends javax.swing.JFrame {
         btnUbah = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        tIdKategory = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -114,6 +134,7 @@ public class frameKategory extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Nama Kategory");
 
+        tNamakategory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tNamakategory.setPreferredSize(new java.awt.Dimension(65, 25));
 
         tblCategory.setModel(new javax.swing.table.DefaultTableModel(
@@ -178,6 +199,9 @@ public class frameKategory extends javax.swing.JFrame {
             }
         });
 
+        tIdKategory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tIdKategory.setPreferredSize(new java.awt.Dimension(65, 25));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,7 +222,9 @@ public class frameKategory extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(38, 38, 38)
-                        .addComponent(tNamakategory, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tNamakategory, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(tIdKategory, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -208,7 +234,8 @@ public class frameKategory extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tNamakategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tNamakategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tIdKategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
@@ -221,13 +248,16 @@ public class frameKategory extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-        category categoryHapus = new category();
-        categoryHapus.HapusData();
-        
+        category ctg = new category();
+        int IdKatgori = Integer.parseInt(tIdKategory.getText().replace("K", "").trim());
+        ctg.setCategoryId(IdKatgori);
+        ctg.HapusData();
+
         reset();
         loadTabel();
     }//GEN-LAST:event_btnHapusActionPerformed
@@ -245,30 +275,43 @@ public class frameKategory extends javax.swing.JFrame {
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
-        category categoryUbah = new category();
-        categoryUbah.setCategroyName(tNamakategory.getText());
-        categoryUbah.UbahData();
-        
+        category ctg = new category();
+        int IdKatgori = Integer.parseInt(tIdKategory.getText().replace("K", "").trim());
+        ctg.setCategoryId(IdKatgori);
+        ctg.setCategroyName(tNamakategory.getText());
+        ctg.UbahData();
+
         reset();
-        
         loadTabel();
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:\
-        category categoryTambah = new category();
-        categoryTambah.setCategroyName(tNamakategory.getText());
-        categoryTambah.TambahData();
+        if (tNamakategory.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nama kategori tidak boleh kosong!");
+            return;
+        }
         
+        category ctg = new category();
+
+        int IdKatgori = Integer.parseInt(tIdKategory.getText().replace("K", "").trim());
+        ctg.setCategoryId(IdKatgori);
+        ctg.setCategroyName(tNamakategory.getText());
+        ctg.TambahData();
+        autoID();
+
         reset();
         loadTabel();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void tblCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoryMouseClicked
         // TODO add your handling code here:
-        int row = tblCategory.rowAtPoint(evt.getPoint());
-        String nama = tblCategory.getValueAt(row, 0).toString();
-       
+        int choiceRow = tblCategory.rowAtPoint(evt.getPoint());
+        
+        String id = tblCategory.getValueAt(choiceRow, 0).toString();
+        String nama = tblCategory.getValueAt(choiceRow, 1).toString();
+        
+        tIdKategory.setText(id);
         tNamakategory.setText(nama);
     }//GEN-LAST:event_tblCategoryMouseClicked
 
@@ -306,6 +349,7 @@ public class frameKategory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private panelgradient.PanelGradient panelGradient1;
+    private javax.swing.JTextField tIdKategory;
     private javax.swing.JTextField tNamakategory;
     private javax.swing.JTable tblCategory;
     // End of variables declaration//GEN-END:variables
