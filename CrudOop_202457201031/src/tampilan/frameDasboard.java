@@ -49,7 +49,7 @@ public class frameDasboard extends javax.swing.JFrame {
         setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Welecome  Aplikasi Java");
+        jLabel1.setText("Welecome Aplikasi Java");
 
         tUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tUsername.setText("Username");
@@ -145,7 +145,7 @@ public class frameDasboard extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(278, 278, 278)
                         .addComponent(jLabel1)))
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
