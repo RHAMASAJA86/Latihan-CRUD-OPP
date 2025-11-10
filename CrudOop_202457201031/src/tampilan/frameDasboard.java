@@ -27,7 +27,7 @@ public class frameDasboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        tJudul = new javax.swing.JLabel();
         tUsername = new javax.swing.JLabel();
         tEmail = new javax.swing.JLabel();
         tFullname = new javax.swing.JLabel();
@@ -39,17 +39,17 @@ public class frameDasboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        mFile = new javax.swing.JMenu();
         mLogout = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        mProduct = new javax.swing.JMenu();
+        mCategory = new javax.swing.JMenu();
+        mUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Welecome Aplikasi Java");
+        tJudul.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tJudul.setText("Welecome Aplikasi Java");
 
         tUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tUsername.setText("Username");
@@ -79,8 +79,8 @@ public class frameDasboard extends javax.swing.JFrame {
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(195, 45));
 
-        jMenu1.setText("File");
-        jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        mFile.setText("File");
+        mFile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         mLogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         mLogout.setText("Logout");
@@ -89,39 +89,39 @@ public class frameDasboard extends javax.swing.JFrame {
                 mLogoutActionPerformed(evt);
             }
         });
-        jMenu1.add(mLogout);
+        mFile.add(mLogout);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mFile);
 
-        jMenu2.setText("Product");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+        mProduct.setText("Product");
+        mProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        mProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu2MouseClicked(evt);
+                mProductMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mProduct);
 
-        jMenu3.setText("Category");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+        mCategory.setText("Category");
+        mCategory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        mCategory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu3MouseClicked(evt);
+                mCategoryMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(mCategory);
 
-        jMenu4.setText("User");
-        jMenu4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenu4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenu4.setMargin(new java.awt.Insets(3, 6, 3, 3));
-        jMenu4.setMaximumSize(new java.awt.Dimension(45, 32767));
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        mUser.setText("User");
+        mUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        mUser.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        mUser.setMargin(new java.awt.Insets(3, 6, 3, 3));
+        mUser.setMaximumSize(new java.awt.Dimension(45, 32767));
+        mUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                mUserMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(mUser);
 
         setJMenuBar(jMenuBar1);
 
@@ -144,14 +144,14 @@ public class frameDasboard extends javax.swing.JFrame {
                             .addComponent(tFullname)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(278, 278, 278)
-                        .addComponent(jLabel1)))
+                        .addComponent(tJudul)))
                 .addContainerGap(310, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(jLabel1)
+                .addComponent(tJudul)
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tUsername)
@@ -171,20 +171,26 @@ public class frameDasboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+    private void mProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mProductMouseClicked
         // TODO add your handling code here:
+        if (!isVisible()) return;
+        dispose();
         new frameProduct().setVisible(true);
-    }//GEN-LAST:event_jMenu2MouseClicked
+    }//GEN-LAST:event_mProductMouseClicked
 
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+    private void mUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mUserMouseClicked
         // TODO add your handling code here:
+        if (!isVisible()) return;
+        dispose();
         new frameUser().setVisible(true);
-    }//GEN-LAST:event_jMenu4MouseClicked
+    }//GEN-LAST:event_mUserMouseClicked
 
-    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+    private void mCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mCategoryMouseClicked
         // TODO add your handling code here:
+        if (!isVisible()) return;
+        dispose();
         new frameKategory().setVisible(true);
-    }//GEN-LAST:event_jMenu3MouseClicked
+    }//GEN-LAST:event_mCategoryMouseClicked
 
     private void mLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLogoutActionPerformed
         // TODO add your handling code here:
@@ -218,7 +224,6 @@ public class frameDasboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -226,14 +231,15 @@ public class frameDasboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu mCategory;
+    private javax.swing.JMenu mFile;
     private javax.swing.JMenuItem mLogout;
+    private javax.swing.JMenu mProduct;
+    private javax.swing.JMenu mUser;
     private javax.swing.JLabel tEmail;
     private javax.swing.JLabel tFullname;
+    private javax.swing.JLabel tJudul;
     private javax.swing.JLabel tUsername;
     // End of variables declaration//GEN-END:variables
 }

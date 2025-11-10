@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package tampilan;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -40,6 +36,7 @@ public class frameLogin extends javax.swing.JFrame {
         cbShow = new javax.swing.JCheckBox();
         tPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -67,7 +64,7 @@ public class frameLogin extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 51, 255));
         jLabel2.setText("Password :");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         jLabel3.setText("Login");
 
         cbShow.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -89,14 +86,19 @@ public class frameLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        jLabel5.setText("User");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(254, 254, 254)
+                .addGap(229, 229, 229)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -118,7 +120,9 @@ public class frameLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(31, 31, 31)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
                 .addGap(55, 55, 55)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,24 +144,25 @@ public class frameLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        user usr = new user();
-        usr.setUserName(tPassword.getText());
-        usr.setUserPassword(tUsername.getText());
+        user usr = new user();       
+        usr.setUserName(tUsername.getText());
+        usr.setUserPassword(tPassword.getText());
         usr.login();
         
         if(sesion.getStatus() == "Aktif") {
             dispose();
             new frameDasboard().setVisible(true);
-        }
+        } 
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void cbShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShowActionPerformed
         // TODO add your handling code here:
         if(cbShow.isSelected()) {
-            // Menampilkan Password
-            tPassword.setEchoChar((char) 0);
+            // Kalau checkbox dicentang
+            tPassword.setEchoChar((char) 0); // Tampilkan password asli
         } else {
-            tPassword.setEchoChar('*');
+            // Kalau checkbox tidak dicentang 
+            tPassword.setEchoChar('*'); // Sembunyikan pakai bintang
         }
     }//GEN-LAST:event_cbShowActionPerformed
 
@@ -196,6 +201,7 @@ public class frameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsername;
     // End of variables declaration//GEN-END:variables
