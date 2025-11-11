@@ -73,7 +73,7 @@ public class user extends Koneksi {
             ps.executeUpdate();
             ps.close();
             
-            JOptionPane.showMessageDialog(null, "Data berhasil di tampilkan");
+            JOptionPane.showMessageDialog(null, "Data berhasil di tambahkan");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Data gagal di tambahkan" + e.getMessage());
         }  

@@ -286,7 +286,7 @@ public class frameKategory extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        // TODO add your handling code here:\
+        // TODO add your handling code here:
         if (tNamakategory.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nama kategori tidak boleh kosong!");
             return;
